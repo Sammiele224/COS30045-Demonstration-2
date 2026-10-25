@@ -46,6 +46,6 @@ To rebuild derived data after changing source CSVs, run `python3 build_data.py` 
 
 1. Take a **browser Developer Tools screenshot** showing the SVG and its DOM tree for Exercise 4.1. The page describes where to inspect it; a genuine screenshot of your own browser is still needed.
 2. Submit the link to the single public GitHub repository containing all four exercise pages. The PDF specifies Classroom repositories, but the student has stated that GitHub Classroom is no longer used. Confirm with the tutor that one repository is accepted.
-3. Host the site on Mercury if that requirement is still in force, then verify all four URLs. The GitHub Pages link above is available, but no Mercury deployment has been made.
+3. Use the GitHub Pages link above for the website submission. The older PDF specifies Mercury, but the student has confirmed that GitHub Pages is accepted. Verify all four pages online before submitting.
 4. Add the GitHub link as a Canvas comment, submit the website links, and upload the **separate** `GenAI_declaration.pdf` after checking its details and adding your name/student ID.
 5. Review the code and practice explaining it in your own words. The assessment includes an oral demonstration and follow-up questions.
