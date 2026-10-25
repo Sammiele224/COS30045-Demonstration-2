@@ -28,11 +28,11 @@ All pages have navigation. D3 v7 is included in `assets` so the site does not de
 
 ## Data provenance and limits
 
-- `source_data/tv_2026_02_15.csv` came from the user's local `Downloads/Data Visualisation/W1` folder. It is a February 2026 snapshot, while the course exercises refer to a January 2026 TV file. `build_data.py` converts screen centimetres to rounded inches, keeps valid positive energy and 0–10 star ratings, and produces the Week 4–6 CSVs in `data`.
-- `source_data/aemo_summary.csv` came from [ZC-ANZ/aemo-historical-prices](https://github.com/ZC-ANZ/aemo-historical-prices), which processes AEMO market data. `build_data.py` averages monthly nominal regional reference prices across five regions for years with all 60 region-month observations. The result covers **2006–2024**. It differs from the course's `ARE_Spot_Prices.csv` and from the AER's demand-weighted annual measure. Replace it with the Canvas CSV if available.
+- `source_data/Ex6_TVdata_withStar.csv` is the supplied course TV dataset. It contains 4,233 models. `build_data.py` keeps valid positive energy and 0–10 star ratings, normalises brand names to uppercase, and produces the Week 4–6 TV CSVs in `data`. Screen size is already in inches.
+- `source_data/ARE_Spot_Prices.csv` is the supplied course electricity price dataset. The scatter and line charts use its `Average Price (notTas-Snowy)` column for all **27 years, 1998–2024**. The column excludes Tasmania and Snowy from the four-region average.
 - The Week 6 histogram uses 100 kWh bins from 0 to 1,800 kWh/year. It excludes higher values from the histogram and reports their count. The scatterplot retains them. Its fixed histogram y scale makes filter comparisons fair.
 
-To rebuild derived data after changing source CSVs, run `python3 build_data.py` from this directory. If replacing the course data, adapt `build_data.py` to the new column names and review every chart label.
+To rebuild derived data from the supplied course CSVs, run `python3 build_data.py` from this directory.
 
 ## Demonstration pointers
 
