@@ -1,5 +1,10 @@
 # COS30045 Demonstration 2 source
 
+## Links
+
+- Repository: https://github.com/Sammiele224/COS30045-Demonstration-2
+- GitHub Pages site: https://sammiele224.github.io/COS30045-Demonstration-2/
+
 ## Run locally
 
 From this directory:
@@ -41,6 +46,6 @@ To rebuild derived data after changing source CSVs, run `python3 build_data.py` 
 
 1. Take a **browser Developer Tools screenshot** showing the SVG and its DOM tree for Exercise 4.1. The page describes where to inspect it; a genuine screenshot of your own browser is still needed.
 2. Submit the link to the single public GitHub repository containing all four exercise pages. The PDF specifies Classroom repositories, but the student has stated that GitHub Classroom is no longer used. Confirm with the tutor that one repository is accepted.
-3. Host the site on Mercury or the course-approved hosting and verify all four URLs. The pages here are local only; no remote repository or Mercury deployment has been created.
+3. Host the site on Mercury if that requirement is still in force, then verify all four URLs. The GitHub Pages link above is available, but no Mercury deployment has been made.
 4. Add the GitHub link as a Canvas comment, submit the website links, and upload the **separate** `GenAI_declaration.pdf` after checking its details and adding your name/student ID.
 5. Review the code and practice explaining it in your own words. The assessment includes an oral demonstration and follow-up questions.
