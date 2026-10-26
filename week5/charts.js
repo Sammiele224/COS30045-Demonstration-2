@@ -17,7 +17,7 @@ function drawBars(data) {
   const y = d3.scaleLinear().domain([0,d3.max(data,d=>d.averageEnergy)]).nice().range([ih,0]);
   plot.selectAll('rect').data(data).join('rect').attr('x',d=>x(d.screenTech)).attr('y',d=>y(d.averageEnergy))
     .attr('width',x.bandwidth()).attr('height',d=>ih-y(d.averageEnergy)).attr('fill','#236f64').attr('rx',4);
-  plot.selectAll('.value').data(data).join('text').attr('class','value').attr('x',d=>x(d.screenTech)+x.bandwidth()/2)
+  plot.selectAll('.value').data(data).join('text').attr('x',d=>x(d.screenTech)+x.bandwidth()/2)
     .attr('y',d=>y(d.averageEnergy)-8).attr('text-anchor','middle').attr('font-size',13).text(d=>`${Math.round(d.averageEnergy)} (${d.models})`);
   plot.append('g').attr('class','axis').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x));
   plot.append('g').attr('class','axis').call(d3.axisLeft(y).ticks(5));

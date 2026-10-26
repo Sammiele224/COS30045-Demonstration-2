@@ -26,7 +26,7 @@ Open `http://localhost:8000/`. A server is necessary because `d3.csv()` uses `fe
 
 All pages have navigation. D3 v7 is included in `assets` so the site does not depend on a CDN. The Week 4 coordinate annotation is `assets/house-annotated.png`; it was drawn over a browser screenshot of `assets/house.svg`.
 
-The responsive layout uses a mint and white visual style. Wide Week 4 and Week 6 charts scroll horizontally on phones so axis labels remain readable.
+The original exercise page layout uses a mint and white colour palette, with “Demonstration 2” in the header.
 
 ## Data provenance and limits
 
