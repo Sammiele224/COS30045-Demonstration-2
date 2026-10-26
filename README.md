@@ -26,6 +26,8 @@ Open `http://localhost:8000/`. A server is necessary because `d3.csv()` uses `fe
 
 All pages have navigation. D3 v7 is included in `assets` so the site does not depend on a CDN. The Week 4 coordinate annotation is `assets/house-annotated.png`; it was drawn over a browser screenshot of `assets/house.svg`.
 
+The responsive layout uses a mint and white visual style. Wide Week 4 and Week 6 charts scroll horizontally on phones so axis labels remain readable.
+
 ## Data provenance and limits
 
 - `source_data/Ex6_TVdata_withStar.csv` is the supplied course TV dataset. It contains 4,233 models. `build_data.py` keeps valid positive energy and 0–10 star ratings, normalises brand names to uppercase, and produces the Week 4–6 TV CSVs in `data`. Screen size is already in inches.

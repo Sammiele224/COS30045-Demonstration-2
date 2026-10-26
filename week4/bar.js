@@ -15,10 +15,10 @@ d3.csv('../data/brand_counts.csv', d => ({brand: d.brand, count: +d.count}))
     chart.selectAll('.bar').data(data).join('rect').attr('class', 'bar')
       .attr('x', 0).attr('y', d => yScale(d.brand))
       .attr('width', d => xScale(d.count)).attr('height', yScale.bandwidth())
-      .attr('rx', 4).attr('fill', '#168f9b');
+      .attr('rx', 4).attr('fill', '#236f64');
     chart.selectAll('.value').data(data).join('text').attr('class', 'value')
       .attr('x', d => xScale(d.count) + 7).attr('y', d => yScale(d.brand) + yScale.bandwidth()/2 + 4)
-      .attr('font-size', 12).attr('fill', '#37556e').text(d => d.count);
+      .attr('font-size', 12).attr('fill', '#50645a').text(d => d.count);
     chart.append('g').attr('class', 'axis').call(d3.axisLeft(yScale).tickSize(0)).select('.domain').remove();
     chart.append('g').attr('class', 'axis').attr('transform', `translate(0,${innerHeight})`).call(d3.axisBottom(xScale).ticks(6));
     svg.append('text').attr('class', 'chart-label').attr('x', margin.left + innerWidth/2)

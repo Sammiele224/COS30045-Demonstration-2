@@ -8,7 +8,7 @@ function drawHistogram(data) {
   const bars=plot.append('g').selectAll('rect').data(allBins).join('rect')
     .attr('x',d=>xScale(d.x0)+1).attr('width',d=>Math.max(0,xScale(d.x1)-xScale(d.x0)-2))
     .attr('y',d=>yScale(d.length)).attr('height',d=>innerHeight-yScale(d.length))
-    .attr('fill','#168f9b');
+    .attr('fill','#236f64');
   bars.append('title').text(d=>`${d.x0}–${d.x1} kWh: ${d.length} models`);
   plot.append('g').attr('class','axis').attr('transform',`translate(0,${innerHeight})`)
     .call(d3.axisBottom(xScale).tickValues(d3.range(0,1801,300)));

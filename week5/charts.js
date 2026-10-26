@@ -16,8 +16,8 @@ function drawBars(data) {
   const x = d3.scaleBand().domain(data.map(d=>d.screenTech)).range([0,iw]).padding(.3);
   const y = d3.scaleLinear().domain([0,d3.max(data,d=>d.averageEnergy)]).nice().range([ih,0]);
   plot.selectAll('rect').data(data).join('rect').attr('x',d=>x(d.screenTech)).attr('y',d=>y(d.averageEnergy))
-    .attr('width',x.bandwidth()).attr('height',d=>ih-y(d.averageEnergy)).attr('fill','#168f9b').attr('rx',4);
-  plot.selectAll('.value').data(data).join('text').attr('x',d=>x(d.screenTech)+x.bandwidth()/2)
+    .attr('width',x.bandwidth()).attr('height',d=>ih-y(d.averageEnergy)).attr('fill','#236f64').attr('rx',4);
+  plot.selectAll('.value').data(data).join('text').attr('class','value').attr('x',d=>x(d.screenTech)+x.bandwidth()/2)
     .attr('y',d=>y(d.averageEnergy)-8).attr('text-anchor','middle').attr('font-size',13).text(d=>`${Math.round(d.averageEnergy)} (${d.models})`);
   plot.append('g').attr('class','axis').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x));
   plot.append('g').attr('class','axis').call(d3.axisLeft(y).ticks(5));
@@ -29,10 +29,10 @@ function drawSpot(data, selector, connected) {
   const y=d3.scaleLinear().domain([0,d3.max(data,d=>d.averagePrice)]).nice().range([ih,0]);
   if(connected){
     const line=d3.line().x(d=>x(d.year)).y(d=>y(d.averagePrice));
-    plot.append('path').datum(data).attr('d',line).attr('fill','none').attr('stroke','#2a6ab4').attr('stroke-width',3);
+    plot.append('path').datum(data).attr('d',line).attr('fill','none').attr('stroke','#236f64').attr('stroke-width',3);
   }
   plot.selectAll('circle').data(data).join('circle').attr('cx',d=>x(d.year)).attr('cy',d=>y(d.averagePrice))
-    .attr('r',connected?3.5:5).attr('fill',connected?'#183e69':'#dc7052').append('title')
+    .attr('r',connected?3.5:5).attr('fill',connected?'#164d45':'#d58159').append('title')
     .text(d=>`${d.year}: A$${d.averagePrice.toFixed(2)}/MWh`);
   plot.append('g').attr('class','axis').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('d')));
   plot.append('g').attr('class','axis').call(d3.axisLeft(y).ticks(5));
@@ -43,7 +43,7 @@ function drawDonut(data) {
   const svg=d3.select('#donut').append('svg').attr('viewBox',`0 0 ${Wd} ${Hd}`)
     .attr('role','img').attr('aria-label','Donut chart of TV model counts by screen size group');
   const group=svg.append('g').attr('transform',`translate(${Wd/2},${Hd/2})`);
-  const color=d3.scaleOrdinal().domain(data.map(d=>d.group)).range(['#2a6ab4','#168f9b','#e49357']);
+  const color=d3.scaleOrdinal().domain(data.map(d=>d.group)).range(['#4e7991','#236f64','#a95531']);
   const pie=d3.pie().sort(null).value(d=>d.count)(data);
   const arc=d3.arc().innerRadius(r*.56).outerRadius(r).padAngle(.018).cornerRadius(3);
   group.selectAll('path').data(pie).join('path').attr('d',arc).attr('fill',d=>color(d.data.group))

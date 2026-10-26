@@ -1,4 +1,33 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>4.1 SVG house</title><link rel="stylesheet" href="../assets/site.css"></head><body><header><strong>COS30045 · Demonstration 2</strong><nav aria-label="Exercises"><a href="../index.html">Overview</a><a href="house.html" aria-current="page">4.1 SVG house</a><a href="bar.html">4.3–4.6 Bar chart</a><a href="../week5/index.html">Week 5 Charts</a><a href="../week6/index.html">Week 6 Interactivity</a></nav></header><main><h1>Exercise 4.1 · SVG house</h1><p class="lede">A house and garden built from SVG primitives. Inspect the image with Developer Tools to see the coordinates, shared window group and transforms.</p><article class="card"><h2>House and garden</h2><div id="house-target" class="responsive-svg-container"></div><p class="note">The two windows inherit one <code>.window</code> style and use <code>translate()</code> for their positions.</p></article><article class="card"><h2>Coordinate annotations</h2><p>This annotated image starts with a browser screenshot of the SVG and marks the coordinates of each primitive.</p><img src="../assets/house-annotated.png" alt="Annotated coordinate guide for all seven SVG shape types and the window group"></article><article class="card"><h2>DOM inspection</h2><p>Open browser Developer Tools, select <code>#house-target svg</code>, then expand the two <code>&lt;g&gt;</code> window children. Take a screenshot of your own browser for the required submission evidence.</p><pre><code>&lt;g class="window"&gt;
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SVG House · COS30045</title>
+  <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+  <header class="site-header"><div class="nav-shell">
+    <a class="brand" href="../index.html" aria-label="Data Visualisation home"><span class="brand-mark">DV.</span><span>Data visualisation<small>COS30045 · Demonstration 2</small></span></a>
+    <nav class="site-nav" aria-label="Exercises"><a href="../index.html">Overview</a><a href="house.html" aria-current="page">SVG house</a><a href="bar.html">Bar chart</a><a href="../week5/index.html">Multi-chart</a><a href="../week6/index.html">Interactivity</a></nav>
+  </div></header>
+  <main>
+    <section class="page-intro">
+      <div><span class="eyebrow">WEEK 04 / EXERCISE 4.1</span><h1>Build a house<br>with SVG shapes.</h1><p class="lede">A simple drawing makes SVG coordinates easy to see. Inspect each shape, then follow the annotated screenshot to connect its code to its position.</p></div>
+      <div class="intro-aside"><strong>Key ideas</strong><span>SVG coordinates</span><span>Shape primitives</span><span>Groups and transforms</span></div>
+    </section>
+    <div class="content-stack">
+      <article class="card chart-card"><span class="card-kicker">THE RESULT</span><h2>House and garden</h2><p>Rectangles, circles, ellipses, a polygon, a line, a path and text share one coordinate system.</p><div id="house-target" class="responsive-svg-container house-visual"></div><p class="figure-note">The two windows inherit one <code>.window</code> style. Their <code>translate()</code> transforms move the same shapes to different positions.</p></article>
+      <div class="grid">
+        <article class="card"><span class="card-kicker">COORDINATE GUIDE</span><h2>Read the drawing</h2><p>Red callouts on a browser screenshot show where coordinates place the SVG primitives.</p><img class="annotation-image" src="../assets/house-annotated.png" alt="Annotated coordinate guide for the SVG shapes and window group"></article>
+        <article class="card"><span class="card-kicker">BROWSER INSPECTION</span><h2>Explore the DOM</h2><p>Open Developer Tools, select <code>#house-target svg</code>, then expand the two window groups. Take your own browser screenshot showing the SVG and DOM tree for submission.</p><pre><code>&lt;g class="window"&gt;
   &lt;g transform="translate(270 265)"&gt;…&lt;/g&gt;
   &lt;g transform="translate(475 265)"&gt;…&lt;/g&gt;
-&lt;/g&gt;</code></pre></article></main><footer>COS30045 · Demonstration 2</footer><script>fetch('../assets/house.svg').then(r=>r.text()).then(svg=>document.querySelector('#house-target').innerHTML=svg).catch(e=>document.querySelector('#house-target').textContent=e.message)</script></body></html>
+&lt;/g&gt;</code></pre></article>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="footer-shell"><strong>COS30045 · Demonstration 2</strong><span>Exercise 4.1 · SVG primitives</span><a href="bar.html">Next: bar chart →</a></div></footer>
+  <script>fetch('../assets/house.svg').then(r => r.text()).then(svg => document.querySelector('#house-target').innerHTML = svg).catch(error => document.querySelector('#house-target').textContent = error.message)</script>
+</body>
+</html>
