@@ -1,4 +1,77 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>4.1 SVG house</title><link rel="stylesheet" href="../assets/site.css"></head><body><header><strong>Demonstration 2</strong><nav aria-label="Exercises"><a href="../index.html">Overview</a><a href="house.html" aria-current="page">4.1 SVG house</a><a href="bar.html">4.3–4.6 Bar chart</a><a href="../week5/index.html">Week 5 Charts</a><a href="../week6/index.html">Week 6 Interactivity</a></nav></header><main><h1>Exercise 4.1 · SVG house</h1><p class="lede">A house and garden built from SVG primitives. Inspect the image with Developer Tools to see the coordinates, shared window group and transforms.</p><article class="card"><h2>House and garden</h2><div id="house-target" class="responsive-svg-container"></div><p class="note">The two windows inherit one <code>.window</code> style and use <code>translate()</code> for their positions.</p></article><article class="card"><h2>Coordinate annotations</h2><p>This annotated image starts with a browser screenshot of the SVG and marks the coordinates of each primitive.</p><img src="../assets/house-annotated.png" alt="Annotated coordinate guide for all seven SVG shape types and the window group"></article><article class="card"><h2>DOM inspection</h2><p>Open browser Developer Tools, select <code>#house-target svg</code>, then expand the two <code>&lt;g&gt;</code> window children. Take a screenshot of your own browser for the required submission evidence.</p><pre><code>&lt;g class="window"&gt;
-  &lt;g transform="translate(270 265)"&gt;…&lt;/g&gt;
-  &lt;g transform="translate(475 265)"&gt;…&lt;/g&gt;
-&lt;/g&gt;</code></pre></article></main><footer>COS30045 · Demonstration 2</footer><script>fetch('../assets/house.svg').then(r=>r.text()).then(svg=>document.querySelector('#house-target').innerHTML=svg).catch(e=>document.querySelector('#house-target').textContent=e.message)</script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>4.1 SVG house</title>
+    <link rel="stylesheet" href="../assets/site.css" />
+  </head>
+  <body>
+    <header>
+      <strong>Demonstration 2</strong>
+      <nav aria-label="Exercises">
+        <a href="../index.html">Overview</a>
+        <a href="house.html" aria-current="page">4.1 SVG house</a>
+        <a href="bar.html">4.3–4.6 Bar chart</a>
+        <a href="../week5/index.html">Week 5 Charts</a>
+        <a href="../week6/index.html">Week 6 Interactivity</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Exercise 4.1 · SVG house</h1>
+      <p class="lede">
+        A house and garden built from SVG primitives. Inspect the image with Developer Tools to see
+        the coordinates, shared window group and transforms.
+      </p>
+      <article class="card">
+        <h2>House and garden</h2>
+        <div id="house-target" class="responsive-svg-container"></div>
+        <p class="note">
+          The two windows inherit one <code>.window</code> style and use
+          <code>translate()</code> for their positions.
+        </p>
+      </article>
+      <article class="card">
+        <h2>Coordinate annotations</h2>
+        <p>
+          This annotated image starts with a browser screenshot of the SVG and marks the coordinates
+          of each primitive.
+        </p>
+        <img
+          src="../assets/house-annotated.png"
+          alt="Annotated coordinate guide for all seven SVG shape types and the window group"
+        />
+      </article>
+      <article class="card">
+        <h2>DOM inspection</h2>
+        <p>
+          This browser screenshot shows the house as rendered and its SVG elements in Developer
+          Tools. The highlighted <code>g.window</code> group contains two window groups. Each uses
+          the same rectangle and lines, while <code>translate()</code> places it at a different
+          position.
+        </p>
+        <figure class="house-figure">
+          <img
+            src="../assets/week4-house-dom-inspection.png"
+            alt="Browser Developer Tools showing the rendered SVG house and the expanded g.window group with two translated window groups"
+            width="2940"
+            height="1912"
+            loading="lazy"
+          />
+          <figcaption>
+            DOM inspection confirms the window grouping in the rendered page.
+            <a href="../assets/house.svg">View the complete SVG source</a> to see every shape used
+            to build the house.
+          </figcaption>
+        </figure>
+      </article>
+    </main>
+    <footer>COS30045 · Demonstration 2</footer>
+    <script>
+      fetch('../assets/house.svg')
+        .then((r) => r.text())
+        .then((svg) => (document.querySelector('#house-target').innerHTML = svg))
+        .catch((e) => (document.querySelector('#house-target').textContent = e.message));
+    </script>
+  </body>
+</html>

@@ -38,7 +38,7 @@ To rebuild derived data from the supplied course CSVs, run `python3 build_data.p
 
 ## Demonstration pointers
 
-- **SVG:** The `viewBox` defines coordinates independent of display size. The house body is a rectangle; the roof is a polygon; the walkway is a path. Both window groups are inside `.window`, so one CSS rule styles both, while `translate()` moves them.
+- **SVG:** The `viewBox` defines coordinates independent of display size. The house body is a rectangle; the roof is a polygon; the walkway is a path. Both window groups are inside `.window`, so one CSS rule styles both, while `translate()` moves them. The Week 4 page displays the DOM inspection screenshot and links to the complete SVG source.
 - **D3 data binding:** `d3.csv()` returns a promise. Numeric CSV fields need conversion from text, e.g. `+d.count`. `selectAll().data().join()` binds each row to one SVG mark. Inspect the DOM and console table in Developer Tools.
 - **Scales:** `scaleLinear()` maps a number to pixels. `scaleBand()` maps a category to a position and supplies bandwidth. Axes render ticks from those scales. Bar height is `innerHeight - y(value)` because SVG y increases downward.
 - **Line and donut:** `d3.line()` turns ordered data points into a path. `d3.pie()` calculates slice angles; `d3.arc()` draws donut paths with an inner radius.
@@ -46,7 +46,7 @@ To rebuild derived data from the supplied course CSVs, run `python3 build_data.p
 
 ## Before Canvas submission
 
-1. Take a **browser Developer Tools screenshot** showing the SVG and its DOM tree for Exercise 4.1. The page describes where to inspect it; a genuine screenshot of your own browser is still needed.
+1. The **browser Developer Tools screenshot** for Exercise 4.1 is saved as `assets/week4-house-dom-inspection.png` and displayed on the Week 4 page.
 2. Submit the link to the single public GitHub repository containing all four exercise pages. The PDF specifies Classroom repositories, but the student has stated that GitHub Classroom is no longer used. Confirm with the tutor that one repository is accepted.
 3. Use the GitHub Pages link above for the website submission. The older PDF specifies Mercury, but the student has confirmed that GitHub Pages is accepted. Verify all four pages online before submitting.
 4. Add the GitHub link as a Canvas comment, submit the website links, and upload the **separate** `GenAI_declaration.pdf` after checking its details and adding your name/student ID.
