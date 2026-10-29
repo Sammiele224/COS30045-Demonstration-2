@@ -90,12 +90,13 @@ function axisLabels(svg, xText, yText) {
     .attr('y', H - 7)
     .attr('text-anchor', 'middle')
     .text(xText);
-  svg
+  const yLabel = svg
     .append('text')
     .attr('class', 'chart-label')
     .attr('transform', `translate(17,${m.top + ih / 2}) rotate(-90)`)
     .attr('text-anchor', 'middle')
     .text(yText);
+  return yLabel;
 }
 function drawBars(data) {
   const { svg, plot } = frame(
@@ -122,10 +123,11 @@ function drawBars(data) {
     .attr('height', (d) => ih - y(d.averageEnergy))
     .attr('fill', '#236f64')
     .attr('rx', 4);
-  plot
+  const values = plot
     .selectAll('.value')
     .data(data)
     .join('text')
+    .attr('class', 'value')
     .attr('x', (d) => x(d.screenTech) + x.bandwidth() / 2)
     .attr('y', (d) => y(d.averageEnergy) - 8)
     .attr('text-anchor', 'middle')
@@ -136,8 +138,8 @@ function drawBars(data) {
     .attr('class', 'axis')
     .attr('transform', `translate(0,${ih})`)
     .call(d3.axisBottom(x));
-  plot.append('g').attr('class', 'axis').call(d3.axisLeft(y).ticks(5));
-  axisLabels(svg, 'Display technology', 'kWh per year');
+  const yAxis = plot.append('g').attr('class', 'axis').call(d3.axisLeft(y).ticks(5));
+  const yLabel = axisLabels(svg, 'Display technology', 'kWh per year');
   enableMarkInteraction(
     bars,
     '#vertical-status',
@@ -149,6 +151,23 @@ function drawBars(data) {
         .attr('opacity', (d) => (selected && d.screenTech !== selected.screenTech ? 0.3 : 1));
     },
   );
+  d3.select('#tech-metric').on('change', function () {
+    const showModels = this.value === 'models';
+    const value = (d) => (showModels ? d.models : d.averageEnergy);
+    y.domain([0, d3.max(data, value)]).nice();
+    bars
+      .transition()
+      .duration(450)
+      .attr('y', (d) => y(value(d)))
+      .attr('height', (d) => ih - y(value(d)));
+    values
+      .text((d) => (showModels ? d.models : `${Math.round(d.averageEnergy)} (${d.models})`))
+      .transition()
+      .duration(450)
+      .attr('y', (d) => y(value(d)) - 8);
+    yAxis.transition().duration(450).call(d3.axisLeft(y).ticks(5));
+    yLabel.text(showModels ? 'TV models' : 'kWh per year');
+  });
 }
 function drawSpot(data, selector, connected) {
   const { svg, plot } = frame(

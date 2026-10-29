@@ -42,7 +42,14 @@
       <div class="grid">
         <article class="card">
           <h2>5.1 · Vertical bar chart</h2>
-          <p>Average annual energy consumption for 55 inch TVs, grouped by display technology.</p>
+          <p>Compare annual energy use or model counts for 55 inch TVs by display technology.</p>
+          <div class="chart-controls">
+            <label for="tech-metric">Measure</label>
+            <select id="tech-metric" class="chart-select">
+              <option value="energy">Average energy (kWh/year)</option>
+              <option value="models">Number of models</option>
+            </select>
+          </div>
           <div id="vertical-bars" class="responsive-svg-container"></div>
           <p id="vertical-status" class="chart-status" aria-live="polite">
             Select a bar to inspect its average and model count.
