@@ -2,25 +2,33 @@
   <defs>
     <style>.window rect{fill:#a7e3ed;stroke:#285778;stroke-width:4}.window line{stroke:#285778;stroke-width:3}</style>
   </defs>
-  <rect x="0" y="0" width="800" height="500" fill="#bfe5f4"/>
-  <rect x="0" y="390" width="800" height="110" fill="#8ecc88"/>
+  <rect class="sky" x="0" y="0" width="800" height="500" fill="#bfe5f4"/>
+  <rect class="ground" x="0" y="390" width="800" height="110" fill="#8ecc88"/>
+  <g class="stars" aria-hidden="true">
+    <circle cx="90" cy="46" r="3"/><circle cx="285" cy="70" r="2"/>
+    <circle cx="335" cy="34" r="3"/><circle cx="610" cy="52" r="2"/>
+    <circle cx="744" cy="165" r="2"/><circle cx="44" cy="185" r="2"/>
+  </g>
   <g data-part="sun">
-    <circle cx="695" cy="83" r="44" fill="#f8d66d"/>
+    <circle class="sun-disc" cx="695" cy="83" r="44" fill="#f8d66d"/>
   </g>
   <g data-part="cloud">
     <ellipse cx="155" cy="95" rx="70" ry="23" fill="white"/>
     <ellipse cx="212" cy="100" rx="47" ry="18" fill="white"/>
   </g>
   <g data-part="walls">
-    <rect x="220" y="205" width="365" height="205" rx="4" fill="#4b91b3" stroke="#235372" stroke-width="5"/>
+    <rect class="house-wall" x="220" y="205" width="365" height="205" rx="4" fill="#4b91b3" stroke="#235372" stroke-width="5"/>
   </g>
   <g data-part="roof">
     <polygon points="190,215 402,95 615,215" fill="#cc5854" stroke="#8f3738" stroke-width="5"/>
     <rect x="505" y="111" width="48" height="65" fill="#a84a44"/>
   </g>
   <g data-part="door">
-    <rect x="371" y="305" width="70" height="105" fill="#734d40"/>
-    <circle cx="428" cy="357" r="4" fill="#f6dc78"/>
+    <rect x="371" y="305" width="70" height="105" fill="#193848"/>
+    <g class="door-leaf">
+      <rect x="371" y="305" width="70" height="105" fill="#734d40"/>
+      <circle cx="428" cy="357" r="4" fill="#f6dc78"/>
+    </g>
   </g>
   <g class="window">
     <g data-part="left-window" transform="translate(270 265)">

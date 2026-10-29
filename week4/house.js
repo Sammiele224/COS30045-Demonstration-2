@@ -21,22 +21,78 @@ fetch('../assets/house.svg')
     const status = document.querySelector('#house-status');
     const initialText = status.textContent.trim();
     target.innerHTML = svgMarkup;
+    const scene = target.querySelector('svg');
+    scene.classList.add('house-scene');
     const parts = [...target.querySelectorAll('[data-part]')];
+    const timeButton = document.querySelector('#house-time');
     let selectedPart = null;
+    let night = false;
+    let doorOpen = false;
+    let cloudMoving = false;
 
-    function restoreStatus() {
-      status.textContent = selectedPart ? descriptions[selectedPart.dataset.part] : initialText;
+    function describe(part) {
+      const name = part.dataset.part;
+      const detail = descriptions[name];
+      if (name === 'sun') return `${detail} Scene: ${night ? 'night' : 'day'}.`;
+      if (name === 'door') return `${detail} Door: ${doorOpen ? 'open' : 'closed'}.`;
+      if (name.includes('window')) {
+        return `${detail} Light: ${part.classList.contains('lights-on') ? 'on' : 'off'}.`;
+      }
+      if (name === 'cloud') return `${detail} Motion: ${cloudMoving ? 'on' : 'off'}.`;
+      return detail;
     }
 
-    function selectPart(part) {
-      selectedPart = selectedPart === part ? null : part;
+    function setNight(value) {
+      night = value;
+      scene.classList.toggle('night', night);
+      timeButton.textContent = night ? 'Switch to day' : 'Switch to night';
+      timeButton.setAttribute('aria-pressed', String(night));
+    }
+
+    function updateSelection() {
       parts.forEach((item) => {
         const selected = item === selectedPart;
         item.classList.toggle('is-selected', selected);
         item.setAttribute('aria-pressed', String(selected));
       });
-      restoreStatus();
     }
+
+    function restoreStatus() {
+      status.textContent = selectedPart ? describe(selectedPart) : initialText;
+    }
+
+    function selectPart(part) {
+      const name = part.dataset.part;
+      if (name === 'sun') setNight(!night);
+      if (name === 'door') {
+        doorOpen = !doorOpen;
+        scene.classList.toggle('door-open', doorOpen);
+      }
+      if (name.includes('window')) part.classList.toggle('lights-on');
+      if (name === 'cloud') {
+        cloudMoving = !cloudMoving;
+        scene.classList.toggle('cloud-moving', cloudMoving);
+      }
+      if (name.includes('flower')) part.classList.toggle('swaying');
+      selectedPart = selectedPart === part ? null : part;
+      updateSelection();
+      status.textContent = describe(part);
+    }
+
+    timeButton.addEventListener('click', () => {
+      setNight(!night);
+      status.textContent = `The house is now in ${night ? 'night' : 'day'} mode. Select the sun to change it again.`;
+    });
+    document.querySelector('#house-reset').addEventListener('click', () => {
+      setNight(false);
+      doorOpen = false;
+      cloudMoving = false;
+      scene.classList.remove('door-open', 'cloud-moving');
+      parts.forEach((part) => part.classList.remove('lights-on', 'swaying'));
+      selectedPart = null;
+      updateSelection();
+      restoreStatus();
+    });
 
     parts.forEach((part) => {
       part.classList.add('house-part');
@@ -45,10 +101,10 @@ fetch('../assets/house.svg')
       part.setAttribute('aria-label', descriptions[part.dataset.part]);
       part.setAttribute('aria-pressed', 'false');
       part.addEventListener('mouseenter', () => {
-        status.textContent = descriptions[part.dataset.part];
+        status.textContent = describe(part);
       });
       part.addEventListener('focus', () => {
-        status.textContent = descriptions[part.dataset.part];
+        status.textContent = describe(part);
       });
       part.addEventListener('mouseleave', restoreStatus);
       part.addEventListener('blur', restoreStatus);

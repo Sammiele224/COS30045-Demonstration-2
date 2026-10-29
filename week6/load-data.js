@@ -15,6 +15,7 @@ d3.csv('../data/tv_clean.csv', (d) => ({
     createTooltip();
     handleMouseEvents();
     populateFilters();
+    setupEnergyRangeControls();
   })
   .catch((error) =>
     d3

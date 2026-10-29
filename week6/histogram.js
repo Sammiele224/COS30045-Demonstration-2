@@ -29,7 +29,9 @@ function drawHistogram(data) {
     '#hist-bin-status',
     (d) => `${d.x0}–${d.x1} kWh per year: ${d.length} models in the current filter`,
     (d) => {
+      setEnergyRangeControls(d ? d.x0 : 0, d ? d.x1 : 1800);
       activeBin = d ? { x0: d.x0, x1: d.x1 } : null;
+      updateHistogramRangeHighlight();
       if (scatterState) updateScatterplot();
     },
   );
@@ -54,9 +56,14 @@ function drawHistogram(data) {
     .text('TV models');
   histogramState = { bars, yScale, data, resetBinSelection };
 }
+function updateHistogramRangeHighlight() {
+  histogramState.bars.attr('opacity', (d) =>
+    !activeBin || (d.x0 >= activeBin.x0 && d.x1 <= activeBin.x1) ? 1 : 0.25,
+  );
+}
 function updateHistogram(selected) {
   const { bars, yScale, data, resetBinSelection } = histogramState;
-  resetBinSelection();
+  resetBinSelection(false);
   const filtered = selected === 'all' ? data : data.filter((d) => d.screenTech === selected);
   const bins = binGenerator(filtered);
   bars
@@ -68,6 +75,7 @@ function updateHistogram(selected) {
     .attr('y', (d) => yScale(d.length))
     .attr('height', (d) => innerHeight - yScale(d.length));
   bars.select('title').text((d) => `${d.x0}–${d.x1} kWh: ${d.length} models`);
+  updateHistogramRangeHighlight();
   const excluded = filtered.filter((d) => d.energyConsumption > 1800).length;
   d3.select('#hist-status').text(
     `${filtered.length.toLocaleString()} models selected; ${excluded} above 1,800 kWh/year excluded from the histogram.`,

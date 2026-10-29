@@ -11,10 +11,51 @@ function populateFilters() {
     activeFilter = id;
     buttons.classed('active', (d) => d.id === id).attr('aria-pressed', (d) => String(d.id === id));
     updateHistogram(id);
-    updateScatterplot();
+    applyEnergyRange();
   }
   buttons.on('click', (event, d) => selectFilter(d.id));
   selectFilter('all');
+}
+
+function setEnergyRangeControls(min, max) {
+  d3.select('#energy-min').property('value', min);
+  d3.select('#energy-max').property('value', max);
+  d3.select('#energy-range-value').text(`${min.toLocaleString()}–${max.toLocaleString()} kWh/year`);
+}
+
+function applyEnergyRange() {
+  const min = +d3.select('#energy-min').property('value');
+  const max = +d3.select('#energy-max').property('value');
+  histogramState.resetBinSelection(false);
+  activeBin = min === 0 && max === 1800 ? null : { x0: min, x1: max };
+  updateHistogramRangeHighlight();
+  updateScatterplot();
+  d3.select('#hist-bin-status').text(
+    activeBin
+      ? `Highlighting models using ${min.toLocaleString()}–${max.toLocaleString()} kWh/year.`
+      : 'Select a bin or adjust the range to highlight matching scatterplot points.',
+  );
+}
+
+function setupEnergyRangeControls() {
+  d3.select('#energy-min').on('input', function () {
+    const min = +this.value;
+    const max = +d3.select('#energy-max').property('value');
+    if (min >= max) d3.select('#energy-max').property('value', Math.min(1800, min + 100));
+    setEnergyRangeControls(min, +d3.select('#energy-max').property('value'));
+    applyEnergyRange();
+  });
+  d3.select('#energy-max').on('input', function () {
+    const max = +this.value;
+    const min = +d3.select('#energy-min').property('value');
+    if (max <= min) d3.select('#energy-min').property('value', Math.max(0, max - 100));
+    setEnergyRangeControls(+d3.select('#energy-min').property('value'), max);
+    applyEnergyRange();
+  });
+  d3.select('#energy-reset').on('click', () => {
+    setEnergyRangeControls(0, 1800);
+    applyEnergyRange();
+  });
 }
 function createTooltip() {
   const tooltip = scatterState.plot

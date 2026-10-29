@@ -21,8 +21,8 @@
       <h1>Week 6 · Interactivity</h1>
       <p class="lede">
         A histogram shows the distribution of annual TV energy use. Select a display technology to
-        update the histogram and scatterplot. Select a histogram bin to highlight matching models;
-        hover or focus on a scatter point to inspect a model.
+        update the histogram and scatterplot. Select a histogram bin or adjust the energy range to
+        highlight matching models; hover or focus on a scatter point to inspect a model.
       </p>
       <article class="card">
         <h2>6.1–6.2 · Energy use histogram and filters</h2>
@@ -37,6 +37,18 @@
           role="group"
           aria-label="Filter by display technology"
         ></div>
+        <div class="chart-controls" role="group" aria-label="Choose annual energy range">
+          <label for="energy-min">From</label>
+          <input id="energy-min" type="range" min="0" max="1700" value="0" step="100" />
+          <label for="energy-max">To</label>
+          <input id="energy-max" type="range" min="100" max="1800" value="1800" step="100" />
+          <output id="energy-range-value" class="control-output" for="energy-min energy-max"
+            >0–1,800 kWh/year</output
+          >
+          <button id="energy-reset" class="action-button secondary" type="button">
+            Show full range
+          </button>
+        </div>
         <div id="histogram" class="responsive-svg-container"></div>
         <p id="hist-status" class="note" aria-live="polite"></p>
         <p id="hist-bin-status" class="chart-status" aria-live="polite">

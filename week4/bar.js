@@ -47,12 +47,12 @@ d3.csv('../data/brand_counts.csv', (d) => ({ brand: d.brand, count: +d.count }))
       .text((d) => d.count);
     const yAxis = chart.append('g').attr('class', 'axis').call(d3.axisLeft(yScale).tickSize(0));
     yAxis.select('.domain').remove();
-    chart
+    const xAxis = chart
       .append('g')
       .attr('class', 'axis')
       .attr('transform', `translate(0,${innerHeight})`)
       .call(d3.axisBottom(xScale).ticks(6));
-    svg
+    const xLabel = svg
       .append('text')
       .attr('class', 'chart-label')
       .attr('x', margin.left + innerWidth / 2)
@@ -60,30 +60,47 @@ d3.csv('../data/brand_counts.csv', (d) => ({ brand: d.brand, count: +d.count }))
       .attr('text-anchor', 'middle')
       .text('Registered TV models');
 
-    enableMarkInteraction(
+    const resetSelection = enableMarkInteraction(
       bars,
       '#bar-status',
       (d) => `${d.brand}: ${d.count.toLocaleString()} TV models`,
     );
 
-    d3.select('#bar-sort').on('change', function () {
+    function updateView() {
+      resetSelection();
       const ordered = [...data].sort(
-        this.value === 'brand'
+        d3.select('#bar-sort').property('value') === 'brand'
           ? (a, b) => d3.ascending(a.brand, b.brand)
           : (a, b) => d3.descending(a.count, b.count) || d3.ascending(a.brand, b.brand),
       );
-      yScale.domain(ordered.map((d) => d.brand));
+      const limit = +d3.select('#bar-limit').property('value');
+      const visible = ordered.slice(0, limit);
+      const shown = new Set(visible.map((d) => d.brand));
+      const visibleHeight = Math.min(innerHeight, visible.length * 36);
+      yScale.domain(visible.map((d) => d.brand)).range([0, visibleHeight]);
+      svg.attr('viewBox', `0 0 ${chartWidth} ${margin.top + visibleHeight + margin.bottom}`);
+      bars
+        .attr('display', (d) => (shown.has(d.brand) ? null : 'none'))
+        .attr('tabindex', (d) => (shown.has(d.brand) ? 0 : -1));
+      values.attr('display', (d) => (shown.has(d.brand) ? null : 'none'));
       bars
         .transition()
         .duration(400)
-        .attr('y', (d) => yScale(d.brand));
+        .attr('y', (d) => yScale(d.brand))
+        .attr('height', yScale.bandwidth());
       values
         .transition()
         .duration(400)
         .attr('y', (d) => yScale(d.brand) + yScale.bandwidth() / 2 + 4);
       yAxis.transition().duration(400).call(d3.axisLeft(yScale).tickSize(0));
       yAxis.select('.domain').remove();
-    });
+      xAxis.transition().duration(400).attr('transform', `translate(0,${visibleHeight})`);
+      xLabel.attr('y', margin.top + visibleHeight + margin.bottom - 7);
+      d3.select('#bar-limit-value').text(`${visible.length} of ${data.length}`);
+    }
+
+    d3.select('#bar-sort').on('change', updateView);
+    d3.select('#bar-limit').on('input', updateView);
   })
   .catch((error) =>
     d3

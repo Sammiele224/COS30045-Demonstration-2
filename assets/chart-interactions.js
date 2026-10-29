@@ -4,11 +4,11 @@ function enableMarkInteraction(selection, statusSelector, describe, onSelect = (
   const initialText = status.text();
   let selectedNode = null;
 
-  function reset() {
+  function reset(notify = true) {
     selectedNode = null;
     selection.classed('is-selected', false).attr('aria-pressed', 'false');
     status.text(initialText);
-    onSelect(null);
+    if (notify) onSelect(null);
   }
 
   function show(event, datum) {

@@ -22,18 +22,23 @@
       <h1>Exercises 4.3–4.6 · Scaled bar chart</h1>
       <p class="lede">
         D3 reads a CSV of model counts, binds one row to each rectangle, and uses a linear scale for
-        width and a band scale for vertical placement.
+        width and a band scale for vertical placement. Sort the brands or change how many are shown.
       </p>
       <article class="card">
         <h2>Most common TV brands</h2>
         <p>
           Number of models in the course TV dataset. Brand spellings are normalised to uppercase.
         </p>
-        <label for="bar-sort">Order brands:</label>
-        <select id="bar-sort" class="chart-select">
-          <option value="count">Most models first</option>
-          <option value="brand">Brand name A–Z</option>
-        </select>
+        <div class="chart-controls">
+          <label for="bar-sort">Order brands</label>
+          <select id="bar-sort" class="chart-select">
+            <option value="count">Most models first</option>
+            <option value="brand">Brand name A–Z</option>
+          </select>
+          <label for="bar-limit">Brands shown</label>
+          <input id="bar-limit" type="range" min="5" max="15" value="15" step="1" />
+          <output id="bar-limit-value" class="control-output" for="bar-limit">15 of 15</output>
+        </div>
         <div id="bar-chart" class="responsive-svg-container"></div>
         <p id="bar-status" class="chart-status" aria-live="polite">
           Hover, focus, or select a bar to inspect its model count.

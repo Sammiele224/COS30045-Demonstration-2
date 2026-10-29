@@ -3,6 +3,76 @@ const W = 560,
   m = { top: 28, right: 28, bottom: 54, left: 65 };
 const iw = W - m.left - m.right,
   ih = H - m.top - m.bottom;
+const spotState = { data: [], views: [], selectedYear: null, timer: null };
+
+function renderSpotYear(year) {
+  const observation = spotState.data.find((d) => d.year === year);
+  for (const view of spotState.views) {
+    view.points
+      .classed('year-active', (d) => d.year === year)
+      .attr('r', (d) => (d.year === year ? 8 : view.connected ? 5.5 : 5))
+      .attr('opacity', (d) => (year === null || d.year === year ? 1 : 0.24))
+      .attr('aria-pressed', (d) => String(d.year === spotState.selectedYear));
+    view.guide
+      .attr('x1', year === null ? 0 : view.x(year))
+      .attr('x2', year === null ? 0 : view.x(year))
+      .attr('opacity', year === null ? 0 : 1);
+    view.status.text(
+      observation
+        ? `${observation.year}: A$${observation.averagePrice.toFixed(2)} per MWh`
+        : view.initial,
+    );
+  }
+  d3.select('#spot-year-output').text(
+    observation ? `${year} · A$${observation.averagePrice.toFixed(2)}/MWh` : 'Choose a year',
+  );
+}
+
+function selectSpotYear(year) {
+  spotState.selectedYear = year;
+  if (year !== null) d3.select('#spot-year').property('value', year);
+  renderSpotYear(year);
+}
+
+function stopSpotPlayback() {
+  if (spotState.timer) clearInterval(spotState.timer);
+  spotState.timer = null;
+  d3.select('#spot-play').text('Play timeline').attr('aria-pressed', 'false');
+}
+
+function setupSpotControls(data) {
+  const slider = d3
+    .select('#spot-year')
+    .attr(
+      'min',
+      d3.min(data, (d) => d.year),
+    )
+    .attr(
+      'max',
+      d3.max(data, (d) => d.year),
+    );
+  slider.on('input', function () {
+    stopSpotPlayback();
+    selectSpotYear(+this.value);
+  });
+  d3.select('#spot-clear').on('click', () => {
+    stopSpotPlayback();
+    selectSpotYear(null);
+  });
+  d3.select('#spot-play').on('click', function () {
+    if (spotState.timer) {
+      stopSpotPlayback();
+      return;
+    }
+    d3.select(this).text('Pause timeline').attr('aria-pressed', 'true');
+    const firstYear = d3.min(data, (d) => d.year);
+    const lastYear = d3.max(data, (d) => d.year);
+    if (spotState.selectedYear === null) selectSpotYear(firstYear);
+    spotState.timer = setInterval(() => {
+      selectSpotYear(spotState.selectedYear >= lastYear ? firstYear : spotState.selectedYear + 1);
+    }, 650);
+  });
+}
 function frame(selector, label) {
   const svg = d3
     .select(selector)
@@ -72,6 +142,12 @@ function drawBars(data) {
     bars,
     '#vertical-status',
     (d) => `${d.screenTech}: ${d.averageEnergy.toFixed(1)} kWh per year across ${d.models} models`,
+    (selected) => {
+      bars
+        .transition()
+        .duration(250)
+        .attr('opacity', (d) => (selected && d.screenTech !== selected.screenTech ? 0.3 : 1));
+    },
   );
 }
 function drawSpot(data, selector, connected) {
@@ -103,6 +179,12 @@ function drawSpot(data, selector, connected) {
       .attr('stroke', '#236f64')
       .attr('stroke-width', 3);
   }
+  const guide = plot
+    .append('line')
+    .attr('class', 'year-guide')
+    .attr('y1', 0)
+    .attr('y2', ih)
+    .attr('opacity', 0);
   const points = plot
     .selectAll('circle')
     .data(data)
@@ -119,11 +201,27 @@ function drawSpot(data, selector, connected) {
     .call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('d')));
   plot.append('g').attr('class', 'axis').call(d3.axisLeft(y).ticks(5));
   axisLabels(svg, 'Year', 'A$ per MWh');
-  enableMarkInteraction(
-    points,
-    connected ? '#spot-line-status' : '#spot-scatter-status',
-    (d) => `${d.year}: A$${d.averagePrice.toFixed(2)} per MWh`,
-  );
+  const status = d3.select(connected ? '#spot-line-status' : '#spot-scatter-status');
+  spotState.views.push({ points, guide, x, status, initial: status.text(), connected });
+  points
+    .classed('interactive-mark spot-point', true)
+    .attr('role', 'button')
+    .attr('tabindex', 0)
+    .attr('aria-label', (d) => `${d.year}: A$${d.averagePrice.toFixed(2)} per MWh`)
+    .attr('aria-pressed', 'false')
+    .on('mouseenter focus', (event, d) => renderSpotYear(d.year))
+    .on('mouseleave blur', () => renderSpotYear(spotState.selectedYear))
+    .on('click', (event, d) => {
+      stopSpotPlayback();
+      selectSpotYear(d.year);
+    })
+    .on('keydown', (event, d) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        stopSpotPlayback();
+        selectSpotYear(d.year);
+      }
+    });
 }
 function drawDonut(data) {
   const Wd = 560,
@@ -158,12 +256,6 @@ function drawDonut(data) {
     .attr('fill', (d) => color(d.data.group));
   slices.append('title').text((d) => `${d.data.group}: ${d.data.count} models`);
   const total = d3.sum(data, (d) => d.count);
-  enableMarkInteraction(
-    slices,
-    '#donut-status',
-    (d) =>
-      `${d.data.group}: ${d.data.count.toLocaleString()} models (${((d.data.count / total) * 100).toFixed(1)}%)`,
-  );
   group
     .selectAll('.arc-label')
     .data(pie)
@@ -174,19 +266,38 @@ function drawDonut(data) {
     .attr('font-weight', 700)
     .attr('font-size', 12)
     .text((d) => `${Math.round((d.data.count / total) * 100)}%`);
-  group
+  const centerValue = group
     .append('text')
     .attr('text-anchor', 'middle')
     .attr('y', -4)
     .attr('font-size', 26)
     .attr('font-weight', 700)
     .text(total.toLocaleString());
-  group
+  const centerLabel = group
     .append('text')
     .attr('text-anchor', 'middle')
     .attr('y', 17)
     .attr('font-size', 12)
     .text('TV models');
+  enableMarkInteraction(
+    slices,
+    '#donut-status',
+    (d) =>
+      `${d.data.group}: ${d.data.count.toLocaleString()} models (${((d.data.count / total) * 100).toFixed(1)}%)`,
+    (selected) => {
+      slices
+        .transition()
+        .duration(250)
+        .attr('opacity', (d) => (selected && d.data.group !== selected.data.group ? 0.25 : 1))
+        .attr('transform', (d) =>
+          selected && d.data.group === selected.data.group
+            ? `translate(${arc.centroid(d).map((value) => value * 0.08)})`
+            : 'translate(0,0)',
+        );
+      centerValue.text(selected ? selected.data.count.toLocaleString() : total.toLocaleString());
+      centerLabel.text(selected ? selected.data.group.split(' ')[0] : 'TV models');
+    },
+  );
   const legend = svg.append('g').attr('transform', 'translate(10,20)');
   data.forEach((d, i) => {
     legend
@@ -221,8 +332,10 @@ Promise.all([
     console.table(spot);
     console.table(sizes);
     drawBars(tech);
+    spotState.data = spot;
     drawSpot(spot, '#spot-scatter', false);
     drawSpot(spot, '#spot-line', true);
+    setupSpotControls(spot);
     drawDonut(sizes);
   })
   .catch((error) =>
