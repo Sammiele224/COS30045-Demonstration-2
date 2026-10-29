@@ -20,12 +20,15 @@
     <main>
       <h1>Exercise 4.1 · SVG house</h1>
       <p class="lede">
-        A house and garden built from SVG primitives. Inspect the image with Developer Tools to see
-        the coordinates, shared window group and transforms.
+        A house and garden built from SVG primitives. Hover, focus, or select a part to inspect how
+        it is drawn. Developer Tools shows the coordinates, shared window group and transforms.
       </p>
       <article class="card">
         <h2>House and garden</h2>
         <div id="house-target" class="responsive-svg-container"></div>
+        <p id="house-status" class="chart-status" aria-live="polite">
+          Select a house part to learn which SVG shapes make it.
+        </p>
         <p class="note">
           The two windows inherit one <code>.window</code> style and use
           <code>translate()</code> for their positions.
@@ -60,18 +63,16 @@
           />
           <figcaption>
             DOM inspection confirms the window grouping in the rendered page.
-            <a href="../assets/house.svg">View the complete SVG source</a> to see every shape used
-            to build the house.
+            <a
+              href="https://github.com/Sammiele224/COS30045-Demonstration-2/blob/main/assets/house.svg"
+              >View the complete SVG source</a
+            >
+            to see every shape used to build the house.
           </figcaption>
         </figure>
       </article>
     </main>
     <footer>COS30045 · Demonstration 2</footer>
-    <script>
-      fetch('../assets/house.svg')
-        .then((r) => r.text())
-        .then((svg) => (document.querySelector('#house-target').innerHTML = svg))
-        .catch((e) => (document.querySelector('#house-target').textContent = e.message));
-    </script>
+    <script src="house.js"></script>
   </body>
 </html>

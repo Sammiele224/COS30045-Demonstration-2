@@ -1,1 +1,61 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>4.3–4.6 Scaled bar chart</title><link rel="stylesheet" href="../assets/site.css"></head><body><header><strong>Demonstration 2</strong><nav aria-label="Exercises"><a href="../index.html">Overview</a><a href="house.html">4.1 SVG house</a><a href="bar.html" aria-current="page">4.3–4.6 Bar chart</a><a href="../week5/index.html">Week 5 Charts</a><a href="../week6/index.html">Week 6 Interactivity</a></nav></header><main><h1>Exercises 4.3–4.6 · Scaled bar chart</h1><p class="lede">D3 reads a CSV of model counts, binds one row to each rectangle, and uses a linear scale for width and a band scale for vertical placement.</p><article class="card"><h2>Most common TV brands</h2><p>Number of models in the course TV dataset. Brand spellings are normalised to uppercase.</p><div id="bar-chart" class="responsive-svg-container"></div><p class="note">Source: course <code>Ex6_TVdata_withStar.csv</code>, aggregated to <code>brand_counts.csv</code>.</p></article><article class="card"><h2>What to explain in the demonstration</h2><p><code>d3.csv()</code> loads rows as strings; <code>+d.count</code> converts counts to numbers. <code>scaleLinear()</code> maps a count to a rectangle width. <code>scaleBand()</code> maps each brand to a row and supplies the bar height. The SVG <code>viewBox</code> scales the result with the page.</p></article></main><footer>COS30045 · Demonstration 2</footer><script src="../assets/d3.v7.min.js"></script><script src="bar.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>4.3–4.6 Scaled bar chart</title>
+    <link rel="stylesheet" href="../assets/site.css" />
+  </head>
+
+  <body>
+    <header>
+      <strong>Demonstration 2</strong>
+      <nav aria-label="Exercises">
+        <a href="../index.html">Overview</a>
+        <a href="house.html">4.1 SVG house</a>
+        <a href="bar.html" aria-current="page">4.3–4.6 Bar chart</a>
+        <a href="../week5/index.html">Week 5 Charts</a>
+        <a href="../week6/index.html">Week 6 Interactivity</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Exercises 4.3–4.6 · Scaled bar chart</h1>
+      <p class="lede">
+        D3 reads a CSV of model counts, binds one row to each rectangle, and uses a linear scale for
+        width and a band scale for vertical placement.
+      </p>
+      <article class="card">
+        <h2>Most common TV brands</h2>
+        <p>
+          Number of models in the course TV dataset. Brand spellings are normalised to uppercase.
+        </p>
+        <label for="bar-sort">Order brands:</label>
+        <select id="bar-sort" class="chart-select">
+          <option value="count">Most models first</option>
+          <option value="brand">Brand name A–Z</option>
+        </select>
+        <div id="bar-chart" class="responsive-svg-container"></div>
+        <p id="bar-status" class="chart-status" aria-live="polite">
+          Hover, focus, or select a bar to inspect its model count.
+        </p>
+        <p class="note">
+          Source: course <code>Ex6_TVdata_withStar.csv</code>, aggregated to
+          <code>brand_counts.csv</code>.
+        </p>
+      </article>
+      <article class="card">
+        <h2>What to explain in the demonstration</h2>
+        <p>
+          <code>d3.csv()</code> loads rows as strings; <code>+d.count</code> converts counts to
+          numbers. <code>scaleLinear()</code> maps a count to a rectangle width.
+          <code>scaleBand()</code> maps each brand to a row and supplies the bar height. The SVG
+          <code>viewBox</code> scales the result with the page.
+        </p>
+      </article>
+    </main>
+    <footer>COS30045 · Demonstration 2</footer>
+    <script src="../assets/d3.v7.min.js"></script>
+    <script src="../assets/chart-interactions.js"></script>
+    <script src="bar.js"></script>
+  </body>
+</html>
