@@ -46,13 +46,13 @@ To rebuild derived data from the supplied course CSVs, run `python3 build_data.p
 
 ## Mercury deployment
 
-After signing in to Mercury once by SSH and confirming the subject directory, upload the contents of `mercury_site/` to `~/cos30045/www/htdocs/`. For example, with your own Mercury username in `MERCURY_USER`:
+Mercury uses your existing Swinburne credentials. Connect to the Swinburne VPN, then run this script with `s` followed by your student ID. It opens the first SSH login, which creates your web directory. Type `exit` after the URL appears; the script then uploads the site and prints all four page URLs.
 
 ```sh
-rsync -av mercury_site/ "$MERCURY_USER@mercury.swin.edu.au:~/cos30045/www/htdocs/"
+./deploy_mercury.sh s<studentID>
 ```
 
-Do not delete Mercury's existing `.htaccess` file. The expected page URLs are `https://mercury.swin.edu.au/cos30045/s<studentID>/` followed by the four paths in the table above; confirm the actual URL shown on login. Mercury's [web server guide](https://feenix.swin.edu.au/help/?page=Mercury+Web+Server) describes the URL and web directory, and its [SSH guide](https://feenix.swin.edu.au/help/?page=Linux+%28Mercury%29) explains first login and VPN access.
+The upload keeps Mercury's existing `.htaccess` file. Confirm the actual URL shown on login. Mercury's [web server guide](https://feenix.swin.edu.au/help/?page=Mercury+Web+Server) describes the URL and web directory, and its [SSH guide](https://feenix.swin.edu.au/help/?page=Linux+%28Mercury%29) explains first login and VPN access.
 
 ## Demonstration pointers
 
