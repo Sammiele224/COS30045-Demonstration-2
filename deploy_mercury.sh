@@ -21,9 +21,10 @@ printf 'Sign in to Mercury with your university password, note the URL shown, th
 ssh "$mercury_user@mercury.swin.edu.au"
 
 printf '\nUploading the four-page website to Mercury...\n'
-rsync -av mercury_site/ "$mercury_user@mercury.swin.edu.au:~/cos30045/www/htdocs/"
+ssh "$mercury_user@mercury.swin.edu.au" 'mkdir -p ~/cos30045/www/htdocs/demonstration-2'
+rsync -av mercury_site/ "$mercury_user@mercury.swin.edu.au:~/cos30045/www/htdocs/demonstration-2/"
 
-base_url="https://mercury.swin.edu.au/cos30045/$mercury_user"
+base_url="https://mercury.swin.edu.au/cos30045/$mercury_user/demonstration-2"
 printf '\nCheck these four pages in a browser:\n'
 printf '%s\n' "$base_url/week4/house.html" \
   "$base_url/week4/bar.html" \

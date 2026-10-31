@@ -46,7 +46,7 @@ To rebuild derived data from the supplied course CSVs, run `python3 build_data.p
 
 ## Mercury deployment
 
-Mercury uses your existing Swinburne credentials. Connect to the Swinburne VPN, then run this script with `s` followed by your student ID. It opens the first SSH login, which creates your web directory. Type `exit` after the URL appears; the script then uploads the site and prints all four page URLs.
+Mercury uses your existing Swinburne credentials. Connect to the Swinburne VPN, then run this script with `s` followed by your student ID. It opens the first SSH login, which creates your web directory. Type `exit` after the URL appears; the script then uploads the site into `www/htdocs/demonstration-2/` and prints all four page URLs.
 
 ```sh
 ./deploy_mercury.sh s<studentID>
