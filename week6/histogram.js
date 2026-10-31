@@ -23,7 +23,6 @@ function drawHistogram(data) {
     .attr('y', (d) => yScale(d.length))
     .attr('height', (d) => innerHeight - yScale(d.length))
     .attr('fill', '#236f64');
-  bars.append('title').text((d) => `${d.x0}–${d.x1} kWh: ${d.length} models`);
   const resetBinSelection = enableMarkInteraction(
     bars,
     '#hist-bin-status',
@@ -54,7 +53,45 @@ function drawHistogram(data) {
     .attr('transform', `translate(18,${margin.top + innerHeight / 2}) rotate(-90)`)
     .attr('text-anchor', 'middle')
     .text('TV models');
-  histogramState = { bars, yScale, data, resetBinSelection };
+  const tooltipWidth = 190;
+  const tooltipHeight = 58;
+  const tooltip = plot
+    .append('g')
+    .attr('class', 'histogram-tooltip')
+    .attr('opacity', 0)
+    .attr('pointer-events', 'none');
+  tooltip
+    .append('rect')
+    .attr('width', tooltipWidth)
+    .attr('height', tooltipHeight)
+    .attr('rx', 8)
+    .attr('fill', '#153d57')
+    .attr('opacity', 0.94);
+  const tooltipText = tooltip.append('text').attr('fill', 'white').attr('font-size', 13);
+  tooltipText.append('tspan').attr('x', 12).attr('y', 23);
+  tooltipText.append('tspan').attr('x', 12).attr('y', 43);
+
+  function showTooltip(event, bin) {
+    const bar = d3.select(event.currentTarget);
+    const barX = +bar.attr('x');
+    const barY = +bar.attr('y');
+    const rightX = barX + +bar.attr('width') + 10;
+    const tooltipX = rightX + tooltipWidth <= innerWidth
+      ? rightX
+      : Math.max(0, barX - tooltipWidth - 10);
+    const tooltipY = Math.max(0, Math.min(barY - 12, innerHeight - tooltipHeight));
+    tooltipText.selectAll('tspan')
+      .data([`${bin.x0}–${bin.x1} kWh/year`, `${bin.length.toLocaleString()} TV models`])
+      .text((line) => line);
+    tooltip.attr('transform', `translate(${tooltipX},${tooltipY})`).attr('opacity', 1);
+  }
+  function hideTooltip() {
+    tooltip.attr('opacity', 0);
+  }
+  bars
+    .on('mouseenter.histogramTooltip focus.histogramTooltip', showTooltip)
+    .on('mouseleave.histogramTooltip blur.histogramTooltip', hideTooltip);
+  histogramState = { bars, yScale, data, resetBinSelection, tooltip };
 }
 function updateHistogramRangeHighlight() {
   histogramState.bars.attr('opacity', (d) =>
@@ -62,8 +99,9 @@ function updateHistogramRangeHighlight() {
   );
 }
 function updateHistogram(selected) {
-  const { bars, yScale, data, resetBinSelection } = histogramState;
+  const { bars, yScale, data, resetBinSelection, tooltip } = histogramState;
   resetBinSelection(false);
+  tooltip.attr('opacity', 0);
   const filtered = selected === 'all' ? data : data.filter((d) => d.screenTech === selected);
   const bins = binGenerator(filtered);
   bars
@@ -74,7 +112,6 @@ function updateHistogram(selected) {
     .ease(d3.easeCubicOut)
     .attr('y', (d) => yScale(d.length))
     .attr('height', (d) => innerHeight - yScale(d.length));
-  bars.select('title').text((d) => `${d.x0}–${d.x1} kWh: ${d.length} models`);
   updateHistogramRangeHighlight();
   const excluded = filtered.filter((d) => d.energyConsumption > 1800).length;
   d3.select('#hist-status').text(
