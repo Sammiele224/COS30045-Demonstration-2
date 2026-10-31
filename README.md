@@ -4,6 +4,8 @@
 
 The current repository is the working source. Four separate repositories have been created under the student's GitHub account because no GitHub Classroom assignments are currently available. Run `python3 prepare_submissions.py` to rebuild their self-contained local projects in `submission_repos/`, the single four-page site in `mercury_site/`, and the upload archive `mercury_site.zip`.
 
+The [Mercury overview](https://mercury.swin.edu.au/cos30045/s106216094/demonstration-2/) is one starting link for all four exercise pages and their separate GitHub repositories.
+
 | GitHub repository to submit | Mercury page to submit |
 | --- | --- |
 | [Exercise 4.1](https://github.com/Sammiele224/COS30045-Demonstration-2-exercise-4-1) | [SVG house](https://mercury.swin.edu.au/cos30045/s106216094/demonstration-2/week4/house.html) |
