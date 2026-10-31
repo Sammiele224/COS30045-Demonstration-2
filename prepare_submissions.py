@@ -13,10 +13,12 @@ import shutil
 ROOT = Path(__file__).resolve().parent
 REPOS = ROOT / "submission_repos"
 MERCURY = ROOT / "mercury_site"
+MERCURY_BASE = "https://mercury.swin.edu.au/cos30045/s106216094/demonstration-2"
 
 EXERCISES = {
     "exercise-4-1": {
         "page": "week4/house.html",
+        "mercury_page": "week4/house.html",
         "title": "Exercise 4.1 · SVG house",
         "files": [
             "assets/site.css",
@@ -28,6 +30,7 @@ EXERCISES = {
     },
     "exercise-4-3-to-4-6": {
         "page": "week4/bar.html",
+        "mercury_page": "week4/bar.html",
         "title": "Exercises 4.3–4.6 · Bar chart",
         "files": [
             "week4/bar.js",
@@ -39,6 +42,7 @@ EXERCISES = {
     },
     "exercise-5": {
         "page": "week5/index.html",
+        "mercury_page": "week5/index.html",
         "title": "Exercise 5 · Multi-chart page",
         "files": [
             "week5/charts.js",
@@ -55,6 +59,7 @@ EXERCISES = {
     },
     "exercise-6": {
         "page": "week6/index.html",
+        "mercury_page": "week6/index.html",
         "title": "Exercise 6 · Interactivity",
         "files": [
             "week6/shared-constants.js",
@@ -109,6 +114,7 @@ def build_repo(name: str, exercise: dict) -> None:
         f"# {exercise['title']}\n\n"
         "Standalone COS30045 Demonstration 2 exercise. All assets and processed CSV data "
         "needed by this page are included here.\n\n"
+        f"Mercury page: {MERCURY_BASE}/{exercise['mercury_page']}\n\n"
         "Run `python3 -m http.server 8000` in this directory, then open "
         "`http://localhost:8000/`. Use a server because browsers block local CSV fetches."
         f"{source_list}\n"

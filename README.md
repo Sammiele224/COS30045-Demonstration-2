@@ -6,10 +6,10 @@ The current repository is the working source. Four separate repositories have be
 
 | GitHub repository to submit | Mercury page to submit |
 | --- | --- |
-| [Exercise 4.1](https://github.com/Sammiele224/COS30045-Demonstration-2-exercise-4-1) | `week4/house.html` |
-| [Exercises 4.3–4.6](https://github.com/Sammiele224/COS30045-Demonstration-2-exercise-4-3-to-4-6) | `week4/bar.html` |
-| [Exercise 5](https://github.com/Sammiele224/COS30045-Demonstration-2-exercise-5) | `week5/index.html` |
-| [Exercise 6](https://github.com/Sammiele224/COS30045-Demonstration-2-exercise-6) | `week6/index.html` |
+| [Exercise 4.1](https://github.com/Sammiele224/COS30045-Demonstration-2-exercise-4-1) | [SVG house](https://mercury.swin.edu.au/cos30045/s106216094/demonstration-2/week4/house.html) |
+| [Exercises 4.3–4.6](https://github.com/Sammiele224/COS30045-Demonstration-2-exercise-4-3-to-4-6) | [Bar chart](https://mercury.swin.edu.au/cos30045/s106216094/demonstration-2/week4/bar.html) |
+| [Exercise 5](https://github.com/Sammiele224/COS30045-Demonstration-2-exercise-5) | [Multi-chart page](https://mercury.swin.edu.au/cos30045/s106216094/demonstration-2/week5/index.html) |
+| [Exercise 6](https://github.com/Sammiele224/COS30045-Demonstration-2-exercise-6) | [Interactivity](https://mercury.swin.edu.au/cos30045/s106216094/demonstration-2/week6/index.html) |
 
 Each standalone project serves its exercise at `index.html`. The Mercury site keeps the existing navigation between all four pages.
 
@@ -66,6 +66,6 @@ The upload keeps Mercury's existing `.htaccess` file. Confirm the actual URL sho
 
 1. The **browser Developer Tools screenshot** for Exercise 4.1 is saved as `assets/week4-house-dom-inspection.png` and displayed on the Week 4 page.
 2. Add all four GitHub repository links above as a Canvas comment. If Classroom assignments become available, use those assignment repositories instead.
-3. Upload `mercury_site/` to Mercury and verify each of the four page URLs before submitting them to Canvas.
+3. Open and verify each of the four Mercury page URLs before submitting them to Canvas. The files are uploaded; browser access prompts for SIMS sign-in.
 4. Upload the **separate** `GenAI_declaration.pdf` after checking its details and adding your name/student ID.
 5. Review the code and practice explaining it in your own words. The assessment includes an oral demonstration and follow-up questions.

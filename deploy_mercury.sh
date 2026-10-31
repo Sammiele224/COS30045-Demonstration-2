@@ -23,6 +23,7 @@ ssh "$mercury_user@mercury.swin.edu.au"
 printf '\nUploading the four-page website to Mercury...\n'
 ssh "$mercury_user@mercury.swin.edu.au" 'mkdir -p ~/cos30045/www/htdocs/demonstration-2'
 rsync -av mercury_site/ "$mercury_user@mercury.swin.edu.au:~/cos30045/www/htdocs/demonstration-2/"
+ssh "$mercury_user@mercury.swin.edu.au" 'chmod -R go-w ~/cos30045/www/htdocs/demonstration-2'
 
 base_url="https://mercury.swin.edu.au/cos30045/$mercury_user/demonstration-2"
 printf '\nCheck these four pages in a browser:\n'
