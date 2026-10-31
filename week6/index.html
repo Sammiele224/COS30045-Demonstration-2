@@ -29,7 +29,8 @@
         <p>
           Each 100 kWh bin counts TV models. The y-axis stays fixed so filtered groups are directly
           comparable. Values above 1,800 kWh/year are omitted from this histogram and reported
-          below.
+          below. Hover over a bar to see its energy range and model count; select it to highlight
+          matching models in the scatterplot.
         </p>
         <div
           id="filters_screen"
@@ -51,7 +52,7 @@
         </div>
         <div id="histogram" class="responsive-svg-container"></div>
         <p id="hist-status" class="note" aria-live="polite"></p>
-        <p id="hist-bin-status" class="chart-status" aria-live="polite">
+        <p id="hist-bin-status" class="visually-hidden" aria-live="polite">
           Select a bin to highlight matching models in the scatterplot.
         </p>
       </article>
@@ -63,7 +64,7 @@
           here.
         </p>
         <div id="scatterplot" class="responsive-svg-container"></div>
-        <p id="scatter-status" class="chart-status" aria-live="polite">
+        <p id="scatter-status" class="visually-hidden" aria-live="polite">
           Hover, focus, or select a point to inspect a TV model.
         </p>
       </article>

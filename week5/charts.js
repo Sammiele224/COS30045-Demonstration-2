@@ -25,8 +25,9 @@ function drawBars(data) {
 }
 function drawSpot(data, selector, connected) {
   const {svg,plot} = frame(selector,connected?'Line chart of annual wholesale spot prices':'Scatter plot of annual wholesale spot prices');
-  // Inset the first and last observations so their dots clear the plot borders.
-  const x=d3.scaleLinear().domain(d3.extent(data,d=>d.year)).range([12,iw-12]);
+  // Pad the year domain so the points clear the borders while the two axes still meet.
+  const [firstYear,lastYear]=d3.extent(data,d=>d.year);
+  const x=d3.scaleLinear().domain([firstYear-.75,lastYear+.75]).range([0,iw]);
   const y=d3.scaleLinear().domain([0,d3.max(data,d=>d.averagePrice)]).nice().range([ih,0]);
   if(connected){
     const line=d3.line().x(d=>x(d.year)).y(d=>y(d.averagePrice));
