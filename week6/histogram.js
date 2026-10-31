@@ -71,25 +71,36 @@ function drawHistogram(data) {
   tooltipText.append('tspan').attr('x', 12).attr('y', 23);
   tooltipText.append('tspan').attr('x', 12).attr('y', 43);
 
-  function showTooltip(event, bin) {
-    const bar = d3.select(event.currentTarget);
-    const barX = +bar.attr('x');
-    const barY = +bar.attr('y');
-    const rightX = barX + +bar.attr('width') + 10;
+  function positionTooltip(x, y) {
+    const rightX = x + 14;
     const tooltipX = rightX + tooltipWidth <= innerWidth
       ? rightX
-      : Math.max(0, barX - tooltipWidth - 10);
-    const tooltipY = Math.max(0, Math.min(barY - 12, innerHeight - tooltipHeight));
+      : Math.max(0, x - tooltipWidth - 14);
+    const tooltipY = Math.max(0, Math.min(y - tooltipHeight - 12, innerHeight - tooltipHeight));
+    tooltip.attr('transform', `translate(${tooltipX},${tooltipY})`);
+  }
+
+  function showTooltip(event, bin) {
     tooltipText.selectAll('tspan')
       .data([`${bin.x0}–${bin.x1} kWh/year`, `${bin.length.toLocaleString()} TV models`])
       .text((line) => line);
-    tooltip.attr('transform', `translate(${tooltipX},${tooltipY})`).attr('opacity', 1);
+    if (event.type === 'focus') {
+      const bar = d3.select(event.currentTarget);
+      positionTooltip(+bar.attr('x') + +bar.attr('width') / 2, +bar.attr('y'));
+    } else {
+      positionTooltip(...d3.pointer(event, plot.node()));
+    }
+    tooltip.attr('opacity', 1);
+  }
+  function moveTooltip(event) {
+    positionTooltip(...d3.pointer(event, plot.node()));
   }
   function hideTooltip() {
     tooltip.attr('opacity', 0);
   }
   bars
     .on('mouseenter.histogramTooltip focus.histogramTooltip', showTooltip)
+    .on('mousemove.histogramTooltip', moveTooltip)
     .on('mouseleave.histogramTooltip blur.histogramTooltip', hideTooltip);
   histogramState = { bars, yScale, data, resetBinSelection, tooltip };
 }
