@@ -161,15 +161,6 @@ img {
   font-size: 13px;
   fill: #50645a;
 }
-.chart-select {
-  font: inherit;
-  color: #17221f;
-  background: #fff;
-  border: 1px solid #cbdcd1;
-  border-radius: 8px;
-  padding: 0.4rem 0.6rem;
-  margin: 0.25rem 0 1rem 0.5rem;
-}
 .chart-status {
   min-height: 2.8rem;
   margin: 0.8rem 0 0;
@@ -179,8 +170,7 @@ img {
   color: #31594d;
   border-radius: 0 8px 8px 0;
 }
-.interactive-mark,
-.house-part {
+.interactive-mark {
   cursor: pointer;
 }
 .interactive-mark:hover,
@@ -191,13 +181,6 @@ img {
   filter: brightness(1.08);
   outline: none;
 }
-.house-part:hover,
-.house-part:focus-visible,
-.house-part.is-selected {
-  filter: drop-shadow(0 0 7px #173d35);
-  outline: none;
-}
-.scene-controls,
 .chart-controls {
   display: flex;
   align-items: center;
@@ -236,110 +219,4 @@ img {
   font-variant-numeric: tabular-nums;
   font-weight: 700;
   color: #164d45;
-}
-.house-scene .sky,
-.house-scene .ground,
-.house-scene .sun-disc,
-.house-scene .house-wall,
-.house-scene .window rect {
-  transition: fill 0.6s ease;
-}
-.house-scene .stars {
-  fill: #f8e9ad;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  pointer-events: none;
-}
-.house-scene.night .sky {
-  fill: #142a49;
-}
-.house-scene.night .ground {
-  fill: #315d4f;
-}
-.house-scene.night .sun-disc {
-  fill: #f6f2ce;
-}
-.house-scene.night .house-wall {
-  fill: #315e78;
-}
-.house-scene.night .stars {
-  opacity: 1;
-}
-.house-scene .window.lights-on rect,
-.house-scene .window [data-part].lights-on rect {
-  fill: #ffe287;
-}
-.house-scene .door-leaf {
-  transform-box: fill-box;
-  transform-origin: left center;
-  transition: transform 0.55s ease;
-}
-.house-scene.door-open .door-leaf {
-  transform: scaleX(0.22);
-}
-.house-scene.cloud-moving [data-part='cloud'] {
-  animation: cloud-drift 5s ease-in-out infinite alternate;
-}
-.house-scene .swaying {
-  transform-box: fill-box;
-  transform-origin: bottom center;
-  animation: flower-sway 1.8s ease-in-out infinite alternate;
-}
-@keyframes cloud-drift {
-  to {
-    transform: translateX(55px);
-  }
-}
-@keyframes flower-sway {
-  to {
-    transform: rotate(10deg);
-  }
-}
-.year-guide {
-  stroke: #94b7a9;
-  stroke-width: 1.5;
-  stroke-dasharray: 5 5;
-  pointer-events: none;
-}
-.spot-point {
-  transition:
-    opacity 0.2s ease,
-    filter 0.2s ease;
-}
-.spot-point.year-active {
-  stroke: #123e35;
-  stroke-width: 3px;
-  filter: drop-shadow(0 0 4px #88c1ad);
-}
-@media (prefers-reduced-motion: reduce) {
-  .house-scene *,
-  .spot-point {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-.timeline-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin: 0 0 1.25rem;
-  padding: 1rem 1.3rem;
-  background: linear-gradient(110deg, #e5f5eb, #e6f2f4);
-  border: 1px solid #cde7d9;
-  border-radius: 16px;
-}
-.timeline-card strong {
-  font-size: 1.1rem;
-}
-.timeline-card p {
-  margin: 0.25rem 0 0;
-  color: #50645a;
-}
-.timeline-card .chart-controls {
-  margin: 0;
-}
-.chart-controls .chart-select {
-  margin: 0;
 }

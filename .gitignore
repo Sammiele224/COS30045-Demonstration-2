@@ -1,3 +1,6 @@
 .DS_Store
 *.log
 __pycache__/
+/submission_repos/
+/mercury_site/
+/mercury_site.zip
