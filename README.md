@@ -54,7 +54,7 @@ Mercury uses your existing Swinburne credentials. Connect to the Swinburne VPN, 
 ./deploy_mercury.sh s<studentID>
 ```
 
-The upload keeps Mercury's existing `.htaccess` file. Confirm the actual URL shown on login. Mercury's [web server guide](https://feenix.swin.edu.au/help/?page=Mercury+Web+Server) describes the URL and web directory, and its [SSH guide](https://feenix.swin.edu.au/help/?page=Linux+%28Mercury%29) explains first login and VPN access.
+The upload installs a public-access `.htaccess` only inside `demonstration-2/`, leaving the course directory's own access file in place. The script checks that each page returns HTTP 200 without credentials. Confirm the actual URL shown on login. Mercury's [web server guide](https://feenix.swin.edu.au/help/?page=Mercury+Web+Server) describes the URL and access settings, and its [SSH guide](https://feenix.swin.edu.au/help/?page=Linux+%28Mercury%29) explains first login and VPN access.
 
 ## Demonstration pointers
 
@@ -68,6 +68,6 @@ The upload keeps Mercury's existing `.htaccess` file. Confirm the actual URL sho
 
 1. The **browser Developer Tools screenshot** for Exercise 4.1 is saved as `assets/week4-house-dom-inspection.png` and displayed on the Week 4 page.
 2. Add all four GitHub repository links above as a Canvas comment. If Classroom assignments become available, use those assignment repositories instead.
-3. Open and verify each of the four Mercury page URLs before submitting them to Canvas. The files are uploaded; browser access prompts for SIMS sign-in.
+3. Open and verify each of the four Mercury page URLs in a private browser window before submitting them to Canvas. The pages should load without a SIMS sign-in after the public-access configuration is uploaded.
 4. Upload the **separate** `GenAI_declaration.pdf` after checking its details and adding your name/student ID.
 5. Review the code and practice explaining it in your own words. The assessment includes an oral demonstration and follow-up questions.

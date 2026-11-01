@@ -31,3 +31,14 @@ printf '%s\n' "$base_url/week4/house.html" \
   "$base_url/week4/bar.html" \
   "$base_url/week5/index.html" \
   "$base_url/week6/index.html"
+
+printf '\nChecking anonymous access (HTTP 200 required):\n'
+for page in week4/house.html week4/bar.html week5/index.html week6/index.html; do
+  url="$base_url/$page"
+  status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$url")
+  printf '%s  %s\n' "$status" "$url"
+  if [ "$status" != 200 ]; then
+    printf 'Anonymous access is not working for %s. Check the Mercury .htaccess configuration.\n' "$url" >&2
+    exit 1
+  fi
+done

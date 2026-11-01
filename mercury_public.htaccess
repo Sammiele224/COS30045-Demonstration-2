@@ -1,0 +1,5 @@
+# Public read access for the Demonstration 2 website only.
+# This file is installed as demonstration-2/.htaccess; the parent course
+# directory and its HTTPS requirement are left in place.
+AuthType None
+Require all granted

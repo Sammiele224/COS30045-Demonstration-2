@@ -123,6 +123,8 @@ def build_repo(name: str, exercise: dict) -> None:
 
 
 def build_mercury_site() -> None:
+    MERCURY.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(ROOT / "mercury_public.htaccess", MERCURY / ".htaccess")
     for source in ["index.html", *[item for item in (ROOT / "assets").iterdir() if item.is_file()]]:
         if isinstance(source, Path):
             copy_file(str(source.relative_to(ROOT)), MERCURY)
